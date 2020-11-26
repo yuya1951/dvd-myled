@@ -23,7 +23,7 @@
 5．
     $echo 2 > /dev/myled0
     
-6.
+6．
     $echo 3 > /dev/myled0
     
  
@@ -32,5 +32,6 @@
 
 # ライセンス
 [ライセンス](https://github.com/yuya1951/dvd-myled/blob/main/COPYING)
+
 [Lisense](https://github.com/yuya1951/dvd-myled/blob/main/COPYING)
 
