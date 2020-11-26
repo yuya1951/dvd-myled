@@ -16,6 +16,7 @@ static struct cdev cdv;
 static struct class *cls = NULL;
 
 static volatile u32 *gpio_base = NULL;
+static int led_number[3] ={23, 24, 25};
 
 static ssize_t led_write(struct file* filp, const char* buf, size_t count, loff_t* pos)
 {
@@ -29,10 +30,57 @@ static ssize_t led_write(struct file* filp, const char* buf, size_t count, loff_
 	else if(c == '1')
 		gpio_base[7] = 1 << 25;
 	else if(c == '2'){
+		gpio_base[7] = 1 << 23;
+		gpio_base[10] = 1 << 24;
+		gpio_base[10] = 1 << 25;
+		ssleep(2);
+		gpio_base[10] = 1 << 23;
+		gpio_base[7] = 1 << 24;
+		gpio_base[10] = 1 << 25;
+		ssleep(2);
+		gpio_base[10] = 1 << 23;
+		gpio_base[10] = 1 << 24;
 		gpio_base[7] = 1 << 25;
-                ssleep(5);
-                gpio_base[10] = 1 << 25;
-                ssleep(1);
+		ssleep(2);
+		gpio_base[10] = 1 << 23;
+		gpio_base[7] = 1 << 24;
+		gpio_base[7] = 1 << 25;
+		ssleep(2);
+		gpio_base[7] = 1 << 23;
+		gpio_base[7] = 1 << 24;
+		gpio_base[7] = 1 << 25;
+		ssleep(2);
+		gpio_base[10] = 1 << 23;
+		gpio_base[10] = 1 << 24;
+		gpio_base[10] = 1 << 25;
+		}
+	else if(c == 3){
+		for(i = 0; i <= 3;i++){
+		gpio_base[7] = 1 << 23;
+		gpio_base[10] = 1 << 24;
+		gpio_base[10] = 1 << 25;
+		ssleep(1);
+		gpio_base[10] = 1 << 23;
+		gpio_base[7] = 1 << 24;
+		gpio_base[10] = 1 << 25;
+		ssleep(1);
+		gpio_base[10] = 1 << 23;
+		gpio_base[10] = 1 << 24;
+		gpio_base[7] = 1 << 25;
+		ssleep(1);
+		gpio_base[7] = 1 << 23;
+		gpio_base[10] = 1 << 24;
+		gpio_base[7] = 1 << 25;
+		ssleep(1);
+		gpio_base[7] = 1 << 23;
+		gpio_base[7] = 1 << 24;
+		gpio_base[7] = 1 << 25;
+		ssleep(1);
+		gpio_base[7] = 1 << 23;
+		gpio_base[10] = 1 << 24;
+		gpio_base[10] = 1 << 25;
+		ssleep(1);
+		}
 	}
 		
 		
@@ -50,16 +98,17 @@ static struct file_operations led_fops = {
 
 static int __init init_mod(void)
 {
-	int retval;
+	int retval, i;
 
 	gpio_base = ioremap_nocache(0xfe200000, 0xA0); 
 
-	const u32 led = 25;
+	for(i = 0; i < 3; i++){
+	const u32 led = led_number[i];
 	const u32 index = led/10;
 	const u32 shift = (led%10)*3;
 	const u32 mask = ~(0x7 << shift);
 	gpio_base[index] = (gpio_base[index] & mask) | (0x1 << shift);
-	
+	}
 	
 	retval =  alloc_chrdev_region(&dev, 0, 1, "myled");
 	if(retval < 0){
