@@ -1,8 +1,11 @@
 # myled
 ロボットシステム学2020　課題1用
 
+
 # テーマ
 ラズベリーパイ4B+において、デバイスドライバを用い、ledを点灯させる。
+
+[youtube動画](https://www.youtube.com/watch?v=uexH9YN6MUI&feature=youtu.be)
 
 # 内容
 ３つのledを用い、いろいろな組み合わせで点滅させる。
@@ -23,12 +26,16 @@
 4．出来上がった/dev/myled0のパーミッションを変更する。
 
     $sudo chmod 666 /dev/myled0
-    
-5．
+   
+5．すべてのLEDを消す。
+
+    $sudo 0 > /dev/myled0
+   
+6．最初は、1つずつ点く。その後、２つ、3つとなり、最後に全部消える。
 
     $echo 2 > /dev/myled0
     
-6．
+7．チカチカする。同じ動きを3周する。
 
     $echo 3 > /dev/myled0
     
