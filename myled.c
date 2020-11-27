@@ -25,8 +25,11 @@ static ssize_t led_write(struct file* filp, const char* buf, size_t count, loff_
 	if(copy_from_user(&c,buf,sizeof(char)))
 		return -EFAULT;
 
-	if(c == '0')
+	if(c == '0'){
+		gpio_base[10] = 1 << 23;
+		gpio_base[10] = 1 << 24;
 		gpio_base[10] = 1 << 25;
+	}
 	else if(c == '1')
 		gpio_base[7] = 1 << 25;
 	else if(c == '2'){
