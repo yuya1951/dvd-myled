@@ -50,5 +50,4 @@
 
 [Lisense](https://github.com/yuya1951/dvd-myled/blob/main/COPYING)
 
-# 協力
-[タナポル](https://github.com/TanapolHongsuwan/LED-RaspPi-DeviceDrivers)と強力しました。
+
